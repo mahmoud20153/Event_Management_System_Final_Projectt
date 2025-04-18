@@ -1,0 +1,1069 @@
+{
+	"info": {
+		"_postman_id": "d21e29ad-c329-4bb6-9d9f-ecbb00f0ae2a",
+		"name": "Events/RSVP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40750571"
+	},
+	"item": [
+		{
+			"name": "Get All Events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"array\",\r",
+							"    items:{\r",
+							"        type: \"object\",\r",
+							"        properties: {\r",
+							"            id: {type: \"number\"},\r",
+							"            name: {type: \"string\"},\r",
+							"            description: {type: \"string\"},\r",
+							"            date: {type: \"string\"}\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA5ODI1LCJleHAiOjE3Mzk4MTM0MjV9.oZZH2K3thyH2cGeDiN94qdyjYitrGTPdo4OJ27STapM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Events - No Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(401);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        id: {type: \"number\"},\r",
+							"        name: {type: \"string\"},\r",
+							"        description: {type: \"string\"},\r",
+							"        date: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA5ODI1LCJleHAiOjE3Mzk4MTM0MjV9.oZZH2K3thyH2cGeDiN94qdyjYitrGTPdo4OJ27STapM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Art Exhibition\",\r\n\"description\": \"An exhibition of contemporary art pieces.\",\r\n\"date\": \"2025-01-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event - Not an Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyOCwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTczOTgwOTk0MiwiZXhwIjoxNzM5ODEzNTQyfQ.eQ1z0SWpVuTew0aQe7THEWXNDqUIdJngCWg1b4OUNTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Art Exhibition\",\r\n\"description\": \"An exhibition of contemporary art pieces.\",\r\n\"date\": \"2025-01-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event - No Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Art Exhibition\",\r\n\"description\": \"An exhibition of contemporary art pieces.\",\r\n\"date\": \"2025-01-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event - Wrong Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA0OTMxLCJleHAiOjE3Mzk4MDg1MzF9.1p4gtCMSsqe-nAZ9BwOFlnnLAYIyzsqJlmNKRKCuYSF",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Art Exhibition\",\r\n\"description\": \"An exhibition of contemporary art pieces.\",\r\n\"date\": \"2025-01-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RSVP to Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties: {\r",
+							"        id: {type: \"number\"},\r",
+							"        user_id: {type: \"number\"},\r",
+							"        event_id: {type: \"string\"},\r",
+							"        updatedAt: {type: \"string\"},\r",
+							"        createdAt: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyOCwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTczOTgwOTk0MiwiZXhwIjoxNzM5ODEzNTQyfQ.eQ1z0SWpVuTew0aQe7THEWXNDqUIdJngCWg1b4OUNTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34",
+						"rsvps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RSVP to Event - No Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(401);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events/:34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						":34",
+						"rsvps"
+					],
+					"variable": [
+						{
+							"key": "34",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RSVP to Event - Wrong Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(500);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUdzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5Nzk4NDg5LCJleHAiOjE3Mzk4MDIwODl9.wubqWxjT4mbpzL-4dszasSj_i-wmu3olyp56JLsZ2Qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/events/:34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						":34",
+						"rsvps"
+					],
+					"variable": [
+						{
+							"key": "34",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RSVP to Event - Invalid Event ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyOCwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTczOTc5Mzk0MiwiZXhwIjoxNzM5Nzk3NTQyfQ._RCAOVPr50bc3XkLLI-oinlhvADoH_nQK53wbO2d69A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/:399/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						":399",
+						"rsvps"
+					],
+					"variable": [
+						{
+							"key": "399",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show RSVPs List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"array\",\r",
+							"    items:{\r",
+							"        type: \"object\",\r",
+							"        properties: {\r",
+							"            userid: {type: \"number\"},\r",
+							"            username: {type: \"string\"},\r",
+							"            email: {type: \"string\"}\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA5ODI1LCJleHAiOjE3Mzk4MTM0MjV9.oZZH2K3thyH2cGeDiN94qdyjYitrGTPdo4OJ27STapM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34",
+						"rsvps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show RSVPs No Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34",
+						"rsvps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show RSVPs Wrong Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5Nzk4NDg5LCJleHAiOjE3Mzk4MDIwODl9.wubqWxjT4mbpzL-4dszasSj_i-wmu3olyp56JLsZ2Qz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34",
+						"rsvps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show RSVPs Normal User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyOCwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTczOTgwOTk0MiwiZXhwIjoxNzM5ODEzNTQyfQ.eQ1z0SWpVuTew0aQe7THEWXNDqUIdJngCWg1b4OUNTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34/rsvps",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34",
+						"rsvps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        message: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA5ODI1LCJleHAiOjE3Mzk4MTM0MjV9.oZZH2K3thyH2cGeDiN94qdyjYitrGTPdo4OJ27STapM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/35",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"35"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event Invalid Event iD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA0OTMxLCJleHAiOjE3Mzk4MDg1MzF9.1p4gtCMSsqe-nAZ9BwOFlnnLAYIyzsqJlmNKRKCuYSQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/999",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event Wrong Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2MiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzM5ODA0OTMxLCJleHAiOjE3Mzk4MDg1MzF9.1p4gtCMSsqe-nAZ9BwOFlnnLAYIyzsqJlmNKRKCuYSF",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event No Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Good Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})\r",
+							"\r",
+							"const Schema = {\r",
+							"    type: \"object\",\r",
+							"    properties:{\r",
+							"        error: {type: \"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Identical Schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/events/34",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"events",
+						"34"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

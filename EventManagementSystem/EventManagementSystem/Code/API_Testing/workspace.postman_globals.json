@@ -1,0 +1,15 @@
+{
+	"id": "a6140a2b-9486-4eb0-8a0b-54e1911ed0c0",
+	"values": [
+		{
+			"key": "URL",
+			"value": "http://localhost:5000/api",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2025-02-17T16:39:20.969Z",
+	"_postman_exported_using": "Postman/11.32.5"
+}
